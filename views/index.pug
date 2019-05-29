@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>Registration form</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="container">
+<div class="row">
+<div class="col-md-6" style="margin-left: -100px;">
+
+	<form action="/signup" method="post">
+	
+	<div class="form-group col-md-6" style="margin-left: 70px; margin-top: 8px;">
+	<h3>Registation form</h3>
+		<label>Name:</label>
+		<div class="input-group">
+		<span class="input-group-addon" style="border-radius: 19px;"><i class="fa fa-user" arial-hidden="true"></i></span>
+		<input type="text" name="name" placeholder="enter user name" class="form-control" style="border-radius: 10px;"></input><br><br>
+		</div>
+	</div>
+	<div class="form-group col-md-6" style="margin-left: 70px; margin-top: 8px;">
+		<label>Email id:</label>
+		<div class="input-group">
+		<span class="input-group-addon" style="border-radius: 19px;"><i class="fa fa-envelope" arial-hidden="true"></i></span>
+		<input type="email" name="email" placeholder="enter mail id" class="form-control" style="border-radius: 10px;"></input><br><br>
+		</div>
+	</div>
+	<div class="form-group col-md-6" style="margin-left: 70px; margin-top: 8px;">
+		<label>Date of birth</label><br>
+		<input type="radio" name="gender" checked>male</input><br>
+		<input type="radio" name="gender" >female</input>
+		<br><br>
+	</div>
+	<div class="form-group col-md-6" style="margin-left: 70px; margin-top: 8px;">
+		<label>Gender</label>
+		<div class="input-group">
+		<span class="input-group-addon" style="border-radius: 19px;"><i class="fa fa-birthday-cake" arial-hidden="true"></i></span>
+		<input type="date" name="dob" style="padding: 7px; border-radius: 10px;"><br><br>
+		</div>
+	</div>
+	<div class="form-group col-md-6" style="margin-left: 70px; margin-top: 8px;">
+		<label>Password:</label>
+		<div class="input-group">
+		<span class="input-group-addon" style="border-radius: 19px;"><i class="fa fa-key" arial-hidden="true"></i></span>
+		<input type="password" name="password" placeholder="enter password" class="form-control" style="border-radius: 10px;"></input><br><br>
+		</div>
+	</div>
+	<div class="form-group col-md-6" style="margin-left: 70px; margin-top: 8px;">
+		<label>Phone number:</label>
+		<div class="input-group">
+		<span class="input-group-addon" style="border-radius: 19px;"><i class="fa fa-phone" arial-hidden="true"></i></span>
+		<input type="tel" name="number" placeholder="enter mobile number" class="form-control" style="border-radius: 10px;"></input><br><br>
+		</div>
+	</div>
+	<div class="form-group col-md-6" style="margin-left: 60px; margin-top: 8px;">
+	<input type="submit" value="signup"></input>
+	</div>
+	</form>
+</div>
+
+
+<div class="col-md-6"  style="margin-left: 100px;">
+<form action="/signin" method="post">
+<div class="form-group col-md-6" style="margin-left: 70px; margin-top: 8px;">
+<h3>login form</h3>
+	<ladel>Name:</ladel>
+	<div class="input-group">
+	<span class="input-group-addon" style="border-radius: 19px;"><i class="fa fa-phone" arial-hidden="true"></i></span>
+	<input type="text" name="name1" placeholder="enter name" class="form-control" style="border-radius: 10px;"></input><br><br>
+	</div>
+</div>
+<div class="form-group col-md-6" style="margin-left: 70px; margin-top: 8px;">
+	<label>Password:</label>
+	<div class="input-group">
+	<span class="input-group-addon" style="border-radius: 19px;"><i class="fa fa-phone" arial-hidden="true"></i></span>
+	<input type="password" name="password1" placeholder="enter password" class="form-control" style="border-radius: 10px;"></input><br><br>
+	</div>
+</div>
+<div class="form-group col-md-6" style="margin-left: 7s0px; margin-top: 8px;">
+<input type="submit" value="signin"></input>
+</div>
+</form>
+
+</div>
+</div>
+</div>
+</body>
+</html>
