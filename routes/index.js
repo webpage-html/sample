@@ -4,15 +4,18 @@ var monk=require('monk')
 var db=monk('localhost:27017/aditya');
 console.log('connected')
 var collection=db.get('signup')
-
+var collection1=db.get('form')
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 router.get('/home', function(req, res) {
+	collection1.find({},function(err,docs){
+		console.log(docs);
+		res.locals.data=docs;
   res.render('home');
 });
-
+	});
 	
 router.post('/signup',function(req,res){
 	var a=req.body.name;
@@ -67,6 +70,14 @@ router.post('/signin',function(req,res){
 			console.log(err);
 		}
 	});
+});
+router.post('/form',function(req,res){
+	var a=req.body.name2;
+	console.log(a);
+	var b=req.body.number2;
+	console.log(b);
+	collection1.insert({"name":a,"number":b});
+	res.redirect("/home");
 });
 
 module.exports = router;
