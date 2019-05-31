@@ -9,6 +9,9 @@ var collection=db.get('signup')
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+router.get('/home', function(req, res) {
+  res.render('home');
+});
 
 	
 router.post('/signup',function(req,res){
@@ -16,21 +19,54 @@ router.post('/signup',function(req,res){
 	console.log(a);
 	var b=req.body.email;
 	console.log(b);
-	var c=req.body.gender;
-	console.log(c);
-	var d=req.body.languages;
-	console.log(d);
-	var e=req.body.select;
-	console.log(e);
-	var f=req.body.dob
-	console.log(f);
+	
 	var g=req.body.pswd;
 	console.log(g);
 	var h=req.body.number;
 	console.log(h);
-	// console.log(req.body)
-	collection.insert({"name":a,"email":b,"gender":c,"languages":d,"EBC":e,"dob":f,"password":g,"mobile no":h})
-	res.redirect("/")
+	//console.log(req.body)
+	collection.insert({"name":a,"email":b,"password":g,"mobile no":h});
+	res.redirect("/");
+	//2nd method
+	// var data=
+	// {
+	// 	Name:req.body.name,
+	// 	Email:req.body.email,
+	// 	Gender:req.body.gender,
+	// 	EBC:req.body.select,
+	// 	DOB:req.body.dob,
+	// 	Password:req.body.password,
+	// 	Mobile:req.body.number,
+	// }
+	// collection.insert(data,function(err,data){
+	// 	if (err) {
+	// 		console.log("error");
+	// 	}
+	// 	else{
+	// 		console.log(data);
+	// 	}	
+	// res.redirect("/");
+	// });
+});
+router.post('/signin',function(req,res){
+	var a=req.body.name1;
+	console.log(a);
+
+	var b=req.body.pswd1;
+	console.log(b);
+	collection.findOne({"name":req.body.name1,"password":req.body.pswd1},function(err,docs){
+		if (!docs) {
+			console.log("mismatch");
+			res.render('index',{err:"invalid username(or)password"});
+		}
+		else if (docs) {
+			console.log("success");
+			res.redirect('/home')
+		}
+		else{
+			console.log(err);
+		}
+	});
 });
 
 module.exports = router;
