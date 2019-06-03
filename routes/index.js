@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var monk=require('monk')
+var monk=require('monk');
 var db=monk('localhost:27017/aditya');
-var moment=require('moment')
+var moment=require('moment');
+var nodemailer = require('nodemailer');
 console.log('connected')
 var collection=db.get('signup')
 var collection1=db.get('form')
@@ -19,39 +20,41 @@ router.get('/home', function(req, res) {
 	});
 	
 router.post('/signup',function(req,res){
-	var a=req.body.name;
-	console.log(a);
-	var b=req.body.email;
-	console.log(b);
-	
-	var g=req.body.pswd;
-	console.log(g);
-	var h=req.body.number;
-	console.log(h);
-	//console.log(req.body)
-	collection.insert({"name":a,"email":b,"password":g,"mobile no":h});
-	res.redirect("/");
-	//2nd method
-	// var data=
-	// {
-	// 	Name:req.body.name,
-	// 	Email:req.body.email,
-	// 	Gender:req.body.gender,
-	// 	EBC:req.body.select,
-	// 	DOB:req.body.dob,
-	// 	Password:req.body.password,
-	// 	Mobile:req.body.number,
-	// }
-	// collection.insert(data,function(err,data){
-	// 	if (err) {
-	// 		console.log("error");
-	// 	}
-	// 	else{
-	// 		console.log(data);
-	// 	}	
-	// res.redirect("/");
-	// });
+	var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'varalakshmi8798@gmail.com',
+    pass: 'Chinni@1998',
+  }
 });
+
+var mailOptions = {
+  from: 'varalakshmi8798@gmail.com',
+  to: req.body.email,
+  subject: 'Sending Email using Node.js',
+  text: 'That was easy!'
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' );
+  }
+});
+var a=req.body.name;
+console.log(a);
+var b=req.body.email;
+console.log(b);
+var c=req.body.pswd;
+console.log(c);
+var d=req.body.number;
+console.log(d);
+console.log(req.body)
+collection.insert({"name":a,"email":b,"password":c,"mobile no":d});
+res.redirect("/");
+});
+
 router.post('/signin',function(req,res){
 	var a=req.body.name1;
 	console.log(a);
