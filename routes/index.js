@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var monk=require('monk')
 var db=monk('localhost:27017/aditya');
+var moment=require('moment')
 console.log('connected')
 var collection=db.get('signup')
 var collection1=db.get('form')
@@ -57,6 +58,9 @@ router.post('/signin',function(req,res){
 
 	var b=req.body.pswd1;
 	console.log(b);
+	var signintime=moment().format("L");
+	console.log(signintime);
+	collection.update({"name":a},{$set:{"signintime":signintime}});
 	collection.findOne({"name":req.body.name1,"password":req.body.pswd1},function(err,docs){
 		if (!docs) {
 			console.log("mismatch");
