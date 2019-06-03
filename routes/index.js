@@ -79,5 +79,29 @@ router.post('/form',function(req,res){
 	collection1.insert({"name":a,"number":b});
 	res.redirect("/home");
 });
+router.post('/update',function(req,res){
+	var a=req.body.name2;
+	console.log(a);
+	var b=req.body.number2;
+	console.log(b);
+	collection1.update({"_id":req.body.id},{$set:{"name":a,"number":b}},function(err,docs){
+		res.redirect('/home');
+	});
+});
+router.post('/remove',function(req,res){
+	var id=req.body.no;
+	//console.log(id);
+	collection1.remove({"_id":id},function(err,docs){
+		//console.log(docs);
+		res.send(docs);
+	});
+});
+router.post('/edit',function(req,res){
+	var id=req.body.no1;
+	console.log(id);
+	collection1.find({"_id":id},function(err,docs){
+		res.send(docs);
+});
+});
 
 module.exports = router;
