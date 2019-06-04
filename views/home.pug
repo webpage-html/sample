@@ -31,10 +31,17 @@ html
           li
             button.btn.btn-info
               a(data-toggle='tab', href='#about') List
+          li
+            button.btn.btn-info
+              a(href='/logout') logout
     .container
       .tab-content
         #home.tab-pane.fade.in.active
           .container
+            b #{user.name}
+            b #{user.email}
+            b #{user.password}
+            
             form(action='/form', method='post' enctype="multipart/form-data")
               .row
                 h3 DETAILS
