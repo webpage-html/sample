@@ -4,12 +4,63 @@ var monk=require('monk');
 var db=monk('localhost:27017/aditya');
 var moment=require('moment');
 var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
+var randomstring=require('randomstring');
+var multer=require('multer');
+//var upload = multer({ dest: 'uploads/' })
 console.log('connected')
 var collection=db.get('signup')
 var collection1=db.get('form')
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/images/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+});
+ 
+var upload = multer({ storage: storage })
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index');
+});
+router.get('/forgotpassword', function(req, res, next) {
+  res.render('forgotpassword');
+});
+router.post('/forgotpassword',function(req,res){
+	var email=req.body.email;
+	console.log(email);
+	var otp=randomstring.generate(5);
+	var msg="<html><head></head><body><b>"+otp+"</b></body></html>"
+
+	var transporter = nodemailer.createTransport({
+service: 'gmail',
+ host: 'smtp.gmail.com',
+port: 465,
+secure: true, // use SSL
+auth: {
+    user: 'luckyummella@gmail.com',
+    pass: 'Aug1998@Chinni'
+}
+});
+var name = req.body.vname;              
+var mailOptions = {
+from: '"Vara Lakshmi" <>', // sender address
+to: req.body.email, // list of receivers
+subject: 'hi',
+html:msg
+}
+// send mail with defined transport object
+transporter.sendMail(mailOptions, function(error, response){
+if(error){
+console.log("Email could not sent due to error: "+error);
+}else{
+console.log("Email has been sent successfully");
+}
+collection.update({"email":email},{$set:{"password":otp}});
+res.redirect('/');
+});
 });
 router.get('/home', function(req, res) {
 	collection1.find({},function(err,docs){
@@ -20,27 +71,29 @@ router.get('/home', function(req, res) {
 	});
 	
 router.post('/signup',function(req,res){
-	var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'varalakshmi8798@gmail.com',
-    pass: 'Chinni@1998',
-  }
+var transporter = nodemailer.createTransport({
+service: 'gmail',
+ host: 'smtp.gmail.com',
+port: 465,
+secure: true, // use SSL
+auth: {
+    user: 'luckyummella@gmail.com',
+    pass: 'Aug1998@Chinni'
+}
 });
-
+var name = req.body.vname;              
 var mailOptions = {
-  from: 'varalakshmi8798@gmail.com',
-  to: req.body.email,
-  subject: 'Sending Email using Node.js',
-  text: 'That was easy!'
-};
-
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Email sent: ' );
-  }
+from: '"Vara Lakshmi" <>', // sender address
+to: req.body.email, // list of receivers
+subject: 'hi',
+}
+// send mail with defined transport object
+transporter.sendMail(mailOptions, function(error, response){
+if(error){
+console.log("Email could not sent due to error: "+error);
+}else{
+console.log("Email has been sent successfully");
+}
 });
 var a=req.body.name;
 console.log(a);
@@ -78,12 +131,15 @@ router.post('/signin',function(req,res){
 		}
 	});
 });
-router.post('/form',function(req,res){
+router.post('/form', upload.single('image'),function(req,res){
+	console.log(req.file);
 	var a=req.body.name2;
 	console.log(a);
 	var b=req.body.number2;
 	console.log(b);
-	collection1.insert({"name":a,"number":b});
+	var img=req.file.originalname;
+	console.log(img);
+	collection1.insert({"name":a,"number":b,"image":img});
 	res.redirect("/home");
 });
 router.post('/update',function(req,res){

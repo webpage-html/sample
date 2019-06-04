@@ -35,7 +35,7 @@ html
       .tab-content
         #home.tab-pane.fade.in.active
           .container
-            form(action='/form', method='post')
+            form(action='/form', method='post' enctype="multipart/form-data")
               .row
                 h3 DETAILS
                 hr(style='border-color: red;')
@@ -45,7 +45,7 @@ html
                   .input-group
                     span.input-group-addon(style='border-radius: 19px;')
                       i.fa.fa-user(arial-hidden='true')
-                    input.form-control(type='text', name='name2', placeholder='enter vehicle number', style='border-radius: 20px; font-size:15px;')
+                    input.form-control(type='text', name='name2', placeholder='enter name', style='border-radius: 20px; font-size:15px;')
               .row
                 .form-group.col-md-4(style='margin-left: 90px; margin-top: 21px;')
                   label.control-label.col-md-5
@@ -53,7 +53,15 @@ html
                   .input-group
                     span.input-group-addon(style='border-radius: 19px;')
                       i.fa.fa-phone(arial-hidden='true')
-                    input.form-control(type='text', name='number2', placeholder='enter type of vehicle', style='border-radius:20px; font-size:15px;')
+                    input.form-control(type='text', name='number2', placeholder='enter number', style='border-radius:20px; font-size:15px;')
+              .row
+                .form-group.col-md-4(style='margin-left: 90px; margin-top: 21px;')
+                  label.control-label.col-md-5
+                    b upload:
+                  .input-group
+                    span.input-group-addon(style='border-radius: 19px;')
+                      i.fa.fa-file(arial-hidden='true')
+                    input.form-control(type='file', name='image', placeholder='upload file ', style='border-radius:20px; font-size:15px;',required='')
               center
                 input(type='submit', name='form', value='form')
         #about.tab-pane.fade
@@ -62,12 +70,15 @@ html
           table#example.table-bordered.table-striped.table-hover(style='margin-top:100px;')
             thead
               tr
+                th Profile
                 th Name
                 th Number
                 th Action
             tbody
               each member in data
                 tr
+                  td 
+                    img(src="images/"+member.image,height="50",width="50")
                   td #{member.name}
                   td #{member.number}
                   td
